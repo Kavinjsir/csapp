@@ -188,8 +188,8 @@ int isTmax(int x) {
  *   Rating: 2
  */
 int allOddBits(int x) {
-  int flag = 0xAA;
-  int mask = (flag << 8) + flag;
+  int mask = 0xAA;
+  mask = (mask << 8) + mask;
   mask = (mask << 16) + mask;
   int compare = x & mask;
   return !(compare ^ mask);
@@ -261,14 +261,22 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  int msb = x ^ y;
-  msb |= (msb >> 1);
-  msb |= (msb >> 2);
-  msb |= (msb >> 4);
-  msb |= (msb >> 8);
-  msb |= (msb >> 16);
-  msb ^= (msb >> 1);
-  return !(x^y) | !((y & msb) ^ msb);
+  unsigned int temp = ~0;
+  temp = temp >> 1;
+  int MAX = temp;
+  int MIN = ~MAX;
+
+  int negativeXNoneNegativeY = x & ~y; // is x<0 && y>=0 ?
+
+  int isSameSign = ~(x ^ y);           // is x, y the same sign
+
+  int y_value = y & MAX;
+  int x_value = x & MAX;
+  int yBiggerThanX = ~(y_value + ~x_value + 1);  // unsigned y >= unsigned x
+
+  int yBiggerAndSameSign = isSameSign & yBiggerThanX;
+
+  return !!( ( negativeXNoneNegativeY | yBiggerAndSameSign ) & MIN);
 }
 //4
 /* 
@@ -280,7 +288,8 @@ int isLessOrEqual(int x, int y) {
  *   Rating: 4 
  */
 int logicalNeg(int x) {
-  return 2;
+  int signed1 = x | (~x + 1);
+  return (signed1 >> 31)  + 1;
 }
 /* howManyBits - return the minimum number of bits required to represent x in
  *             two's complement
@@ -293,9 +302,55 @@ int logicalNeg(int x) {
  *  Legal ops: ! ~ & ^ | + << >>
  *  Max ops: 90
  *  Rating: 4
+ *
+ *
+ *
+  unsigned int temp = ~0;
+  temp = temp >> 1;
+  int MAX = temp;
+
+  unsigned y = x & MAX;
+  //changing all right side bits to 1.
+  y = (y>>1) | y;
+  y = (y>>2) | y;
+  y = (y>>4) | y;
+  y = (y>>8) | y;
+  y = (y>>16) | y;
+
+  int power = (y + 1) >> 1;
+
+  //as now the number is 2 * x-1, where x is required answer, so adding 1 and dividing it by 2. 
+  return power + 2;
+
+
+
+
+
+  int ret=!!x;
+
+  int m=!!(x&0xFFFF0000)<<4;
+  x>>=m;
+  ret|=m;
+
+  m=!!(x&0xFF00)<<3;
+  x>>=m;
+  ret|=m;
+
+  m=!!(x&0xF0)<<2;
+  x>>=m;
+  ret|=m;
+
+  m=!!(x&0xC)<<1;
+  x>>=m;
+  ret|=m;
+
+  ret+=!!(x&0x2);
+
+  int mask = x >> 31;
+  return (mask & ret) | (~mask & (ret+ 1));
+
  */
 int howManyBits(int x) {
-  return 0;
 }
 //float
 /* 
