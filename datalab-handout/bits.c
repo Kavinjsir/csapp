@@ -365,7 +365,24 @@ int howManyBits(int x) {
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-  return 2;
+  unsigned fuhao = (uf & 0x80000000);
+  unsigned exp = (uf << 1) >> 24;
+  unsigned fra = (uf << 9) >> 9;
+
+  // Check if NaN
+  // if (!(exp ^ 0xFF) && !!(fra ^ 0)) return uf;
+  if (!(exp ^ 0xFF)) return uf;
+
+  // if exp > 0
+  if (!!(exp ^ 0)) {
+    unsigned newexp = (exp + 1) << 23;
+    return fuhao + newexp + fra;
+  }
+
+  // if exp == 00000000
+  unsigned newfra = fra << 1;
+  unsigned newexp = exp << 23;
+  return fuhao + newexp + newfra;
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
