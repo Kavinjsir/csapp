@@ -397,7 +397,28 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
-  return 2;
+  unsigned exp = (uf << 1) >> 24;
+  unsigned fra = (uf << 9) >> 9;
+
+  int expval = exp;
+  expval = expval - 127;
+
+  if (expval < 0) return 0;
+
+  if (expval > 30) return 0x80000000u;
+
+  int pos = 23 - expval;
+
+  fra = fra >> pos;
+
+  unsigned one = 1 << expval;
+
+  unsigned value = one + fra;
+
+  int result = value;
+  if (!(uf & 0x80000000 ^ 0)) return result;
+
+  return -result;
 }
 /* 
  * floatPower2 - Return bit-level equivalent of the expression 2.0^x
