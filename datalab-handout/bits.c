@@ -381,8 +381,7 @@ unsigned floatScale2(unsigned uf) {
 
   // if exp == 00000000
   unsigned newfra = fra << 1;
-  unsigned newexp = exp << 23;
-  return fuhao + newexp + newfra;
+  return fuhao + newfra;
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
@@ -434,5 +433,20 @@ int floatFloat2Int(unsigned uf) {
  *   Rating: 4
  */
 unsigned floatPower2(int x) {
-    return 2;
+  unsigned res;
+
+  if (x < -149) return 0;
+
+  if ( x < -126) {
+    res = 1 << (x + 149); // x - (-149)
+    return res;
+  }
+
+  if ( x <= 127 ) {
+    res = x + 127; // x - (-126) + 1
+    res = res << 23;
+    return res;
+  }
+
+  return 0x7F800000;
 }
