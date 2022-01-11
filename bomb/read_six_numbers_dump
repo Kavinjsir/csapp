@@ -1,0 +1,19 @@
+Dump of assembler code for function read_six_numbers:
+   0x000000000040145c <+0>:	48 83 ec 18	sub    $0x18,%rsp
+   0x0000000000401460 <+4>:	48 89 f2	mov    %rsi,%rdx
+   0x0000000000401463 <+7>:	48 8d 4e 04	lea    0x4(%rsi),%rcx
+   0x0000000000401467 <+11>:	48 8d 46 14	lea    0x14(%rsi),%rax
+   0x000000000040146b <+15>:	48 89 44 24 08	mov    %rax,0x8(%rsp)
+   0x0000000000401470 <+20>:	48 8d 46 10	lea    0x10(%rsi),%rax
+   0x0000000000401474 <+24>:	48 89 04 24	mov    %rax,(%rsp)
+   0x0000000000401478 <+28>:	4c 8d 4e 0c	lea    0xc(%rsi),%r9
+   0x000000000040147c <+32>:	4c 8d 46 08	lea    0x8(%rsi),%r8
+   0x0000000000401480 <+36>:	be c3 25 40 00	mov    $0x4025c3,%esi
+   0x0000000000401485 <+41>:	b8 00 00 00 00	mov    $0x0,%eax
+   0x000000000040148a <+46>:	e8 61 f7 ff ff	callq  0x400bf0 <__isoc99_sscanf@plt>
+   0x000000000040148f <+51>:	83 f8 05	cmp    $0x5,%eax
+   0x0000000000401492 <+54>:	7f 05	jg     0x401499 <read_six_numbers+61>
+   0x0000000000401494 <+56>:	e8 a1 ff ff ff	callq  0x40143a <explode_bomb>
+   0x0000000000401499 <+61>:	48 83 c4 18	add    $0x18,%rsp
+   0x000000000040149d <+65>:	c3	retq   
+End of assembler dump.

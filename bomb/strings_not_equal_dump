@@ -1,0 +1,40 @@
+Dump of assembler code for function strings_not_equal:
+   0x0000000000401338 <+0>:	41 54	push   %r12
+   0x000000000040133a <+2>:	55	push   %rbp
+   0x000000000040133b <+3>:	53	push   %rbx
+   0x000000000040133c <+4>:	48 89 fb	mov    %rdi,%rbx
+   0x000000000040133f <+7>:	48 89 f5	mov    %rsi,%rbp
+   0x0000000000401342 <+10>:	e8 d4 ff ff ff	callq  0x40131b <string_length>
+   0x0000000000401347 <+15>:	41 89 c4	mov    %eax,%r12d
+   0x000000000040134a <+18>:	48 89 ef	mov    %rbp,%rdi
+   0x000000000040134d <+21>:	e8 c9 ff ff ff	callq  0x40131b <string_length>
+   0x0000000000401352 <+26>:	ba 01 00 00 00	mov    $0x1,%edx
+   0x0000000000401357 <+31>:	41 39 c4	cmp    %eax,%r12d
+   0x000000000040135a <+34>:	75 3f	jne    0x40139b <strings_not_equal+99>
+   0x000000000040135c <+36>:	0f b6 03	movzbl (%rbx),%eax
+   0x000000000040135f <+39>:	84 c0	test   %al,%al
+   0x0000000000401361 <+41>:	74 25	je     0x401388 <strings_not_equal+80>
+   0x0000000000401363 <+43>:	3a 45 00	cmp    0x0(%rbp),%al
+   0x0000000000401366 <+46>:	74 0a	je     0x401372 <strings_not_equal+58>
+   0x0000000000401368 <+48>:	eb 25	jmp    0x40138f <strings_not_equal+87>
+   0x000000000040136a <+50>:	3a 45 00	cmp    0x0(%rbp),%al
+   0x000000000040136d <+53>:	0f 1f 00	nopl   (%rax)
+   0x0000000000401370 <+56>:	75 24	jne    0x401396 <strings_not_equal+94>
+   0x0000000000401372 <+58>:	48 83 c3 01	add    $0x1,%rbx
+   0x0000000000401376 <+62>:	48 83 c5 01	add    $0x1,%rbp
+   0x000000000040137a <+66>:	0f b6 03	movzbl (%rbx),%eax
+   0x000000000040137d <+69>:	84 c0	test   %al,%al
+   0x000000000040137f <+71>:	75 e9	jne    0x40136a <strings_not_equal+50>
+   0x0000000000401381 <+73>:	ba 00 00 00 00	mov    $0x0,%edx
+   0x0000000000401386 <+78>:	eb 13	jmp    0x40139b <strings_not_equal+99>
+   0x0000000000401388 <+80>:	ba 00 00 00 00	mov    $0x0,%edx
+   0x000000000040138d <+85>:	eb 0c	jmp    0x40139b <strings_not_equal+99>
+   0x000000000040138f <+87>:	ba 01 00 00 00	mov    $0x1,%edx
+   0x0000000000401394 <+92>:	eb 05	jmp    0x40139b <strings_not_equal+99>
+   0x0000000000401396 <+94>:	ba 01 00 00 00	mov    $0x1,%edx
+   0x000000000040139b <+99>:	89 d0	mov    %edx,%eax
+   0x000000000040139d <+101>:	5b	pop    %rbx
+   0x000000000040139e <+102>:	5d	pop    %rbp
+   0x000000000040139f <+103>:	41 5c	pop    %r12
+   0x00000000004013a1 <+105>:	c3	retq   
+End of assembler dump.
